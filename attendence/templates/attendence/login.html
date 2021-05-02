@@ -1,0 +1,10 @@
+<h1>Login Page</h1>
+<p>testing321</p>
+<form action="" method="POST">
+    {% csrf_token %}
+    <fieldset>
+        {{ form.as_p }}
+    </fieldset>
+    <button type="submit">Login</button>
+</form>
+<a href="{% url 'register-page' %}"><button>Register Here</button></a>

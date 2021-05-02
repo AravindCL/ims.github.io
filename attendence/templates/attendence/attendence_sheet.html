@@ -1,0 +1,11 @@
+<h1>Attendence Sheet</h1>
+
+<form>
+
+    {% for student in students %}
+    
+        {{student}} {{student.is_present}}<br>    
+    
+    {% endfor %}
+
+</form>

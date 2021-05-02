@@ -1,0 +1,13 @@
+<h1>Teachers Dashboard</h1>
+
+
+<h3>{{teacher}}</h3>
+
+
+<a href="{% url 'home-page' %}">Home</a>
+<a href="{% url 'add-class-page' %}">Add Class</a>
+<br><br><hr>
+{% for cls in clss %}
+    <a href="{% url 'attendence-page' brnch=cls.branch sem=cls.sem sec=cls.sec %}">{{cls.sem}} {{cls.sec}} {{cls.branch}} </a> <br>
+    
+{% endfor %}
