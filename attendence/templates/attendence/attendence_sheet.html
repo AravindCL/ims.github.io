@@ -1,11 +1,15 @@
 <h1>Attendence Sheet</h1>
 
-<form>
+<form method="GET" action="{% url 'count-attdnce-page' %}" >
 
     {% for student in students %}
-    
+
+    <input type="checkbox" name="present" value="true {{ student.usn }} {{ student.sem }} {{ student.sec }}" id="{{student.usn}}" >
+    <!-- <input type="checkbox" name="absent" value="false {{ student.usn }}" id="{{student.usn}}" > -->
+
         {{student}} {{student.is_present}}<br>    
     
     {% endfor %}
+    <button type="submit" value="{{ student }}" >submit</button>
 
 </form>

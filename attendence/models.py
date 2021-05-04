@@ -55,12 +55,13 @@ class Class(models.Model):
     sec = models.CharField(max_length = 200, choices=section, null=True, blank=True)
 
     def __str__(self):
-        return self.teacher.name
+        return self.teacher.name + " " + str(self.sem) + self.sec
 
 class Count(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    clss = models.ForeignKey(Class, on_delete=models.CASCADE)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True)
+    clss = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, null=True)
     cnt = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return (self.student.name + " " + str(self.cnt))
+        # return (str(self.cnt))
+        return (self.student.name + " " + str(self.cnt) + " " + self.clss.sec)

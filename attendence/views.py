@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .models import Student, Teacher, Class
+from .models import Student, Teacher, Class, Count
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import AddClass, TeacherForm
@@ -61,8 +61,7 @@ def add_class(request):
 
 @login_required
 def attendence_sheet(request, brnch, sem, sec):
-    students = Student.objects.filter(branch=brnch, sem=sem, sec=sec)
-    print(students)
+    students = Student.objects.filter(branch=brnch, sem=sem, sec=sec)    
     context = {
         'students':students,
     }
@@ -84,4 +83,25 @@ def teacher_form(request):
     return render(request, 'attendence/teacher_form.html', context)
 
 def counts(request):
-    pass
+    print("------------------------")
+    students = Student.objects.all()
+
+    a = dict(request.GET)
+    print('')
+    print(request.GET)
+    for i,j in a.items():
+        sem = j[0].split()[2]
+        sec = j[0].split()[3]
+        room = Class.objects.get(sem=sem, sec=sec)
+        for i in j:
+            print(i)
+            for student in students:
+                if i.split()[1] == student.usn:
+                    cnts = Count.objects.get_or_none(student=student, clss=room)
+                    if cnts:
+                        Count.objects.update(student=student, clss=room, cnt=1+cnts)
+                    else:
+                        Count.objects.create(student=student, clss=room, cnt=1)
+
+    print('------------------------')
+    return redirect('dashboard-page')
