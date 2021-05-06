@@ -3,7 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Student, Teacher, Class, Count
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import AddClass, TeacherForm
+from .forms import AddClass, TeacherForm, UserRegistrationForm, StudentForm
 from django.contrib.auth import login, authenticate
 
 def home(request):
@@ -13,7 +13,8 @@ def home(request):
 
 def register(request):
     if request.method == 'POST':
-        form = UserCreationForm(request.POST)
+        form = UserRegistrationForm(request.POST)
+        print(request.POST)
         if form.is_valid():
             form.save()
             usr = form.cleaned_data['username']
@@ -22,9 +23,12 @@ def register(request):
                 password=form.cleaned_data['password1']
             )
         login(request, new_user)
+        if request.POST['student'] == 'on':
+            return redirect('student-form-page')
+        
         return redirect('teacher-form-page')
     else:
-        form = UserCreationForm()
+        form = UserRegistrationForm()
 
     context = {
         'form':form,
@@ -61,9 +65,13 @@ def add_class(request):
 
 @login_required
 def attendence_sheet(request, brnch, sem, sec):
+    teacher = Teacher.objects.get(user=request.user)
+    # clss = Class.objects.get()
+    
     students = Student.objects.filter(branch=brnch, sem=sem, sec=sec)    
     context = {
         'students':students,
+        'teacher':teacher,
     }
     return render(request, 'attendence/attendence_sheet.html', context)
 
@@ -92,16 +100,53 @@ def counts(request):
     for i,j in a.items():
         sem = j[0].split()[2]
         sec = j[0].split()[3]
-        room = Class.objects.get(sem=sem, sec=sec)
+        # student = j[0].split()[4]
+        teacher = Teacher.objects.get(user=request.user)
+        room = Class.objects.get(teacher=teacher,sem=sem, sec=sec)
         for i in j:
-            print(i)
+            # print(i)
             for student in students:
                 if i.split()[1] == student.usn:
-                    cnts = Count.objects.get_or_none(student=student, clss=room)
-                    if cnts:
-                        Count.objects.update(student=student, clss=room, cnt=1+cnts)
+                    try:
+                        cnts = Count.objects.get(student=student, clss=room).student
+                    except:
+                        cnts = None
+                    print(cnts)
+                    # for cn in cnts:
+                    #     # Count.objects.update(student=)
+                    #     print(student)
+                    #     print('$$$$')
+                    #     print(cnts)
+                    #     print(cn)
+                    #     print('*****')
+                    print(student)
+                    if student == cnts:
+                        prev = Count.objects.get(student=student, clss=room).cnt
+                        ct = Count.objects.get(student=student, clss=room)
+                        ct.cnt = prev + 1
+                        ct.save()
+                        print('student is present')
                     else:
-                        Count.objects.create(student=student, clss=room, cnt=1)
+                        Count.objects.create(student=student, clss=room ,cnt=22)
 
+                        print('Student is absent')
+
+        return redirect('dashboard-page')
     print('------------------------')
     return redirect('dashboard-page')
+
+
+def student_form(request):
+    user = request.user
+    if request.method == 'POST':
+        form = StudentForm(request.POST, initial={'user':request.user.username})
+        if form.is_valid():
+            form.save()
+        return redirect('home-page')
+    else:
+        form = StudentForm(initial={'user':user})
+
+    context = {
+        'form':form,
+    }
+    return render(request, 'attendence/student_form.html', context)

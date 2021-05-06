@@ -14,6 +14,7 @@ class Student(models.Model):
     section = (
         ('A','A'),('B','B'),('C','C'),('D','D'),
     )
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     usn = models.CharField(max_length=200, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True)
     branch = models.CharField(max_length = 200, choices=branc, null=True, blank=True)
@@ -22,7 +23,7 @@ class Student(models.Model):
     is_present = models.BooleanField(default=False, blank=True)
 
     def __str__(self):
-        return (self.name + " " + self.usn)
+        return (self.usn + " " + self.name)
 
 
 

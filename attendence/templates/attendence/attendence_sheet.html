@@ -2,14 +2,25 @@
 
 <form method="GET" action="{% url 'count-attdnce-page' %}" >
 
-    {% for student in students %}
+   
 
-    <input type="checkbox" name="present" value="true {{ student.usn }} {{ student.sem }} {{ student.sec }}" id="{{student.usn}}" >
+  
     <!-- <input type="checkbox" name="absent" value="false {{ student.usn }}" id="{{student.usn}}" > -->
-
-        {{student}} {{student.is_present}}<br>    
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Present</th>
+            </tr>
+            {% for student in students %}
+            <tr>
+                <td>{{student}}</td>
+                <td><input type="checkbox" name="present" value="true {{ student.usn }} {{ student.sem }} {{ student.sec }} {{ student.name }}" id="{{student.usn}}" ></td>
+                
+            </tr>
+            {% endfor %}
+        </table>
+       <br>    
     
-    {% endfor %}
     <button type="submit" value="{{ student }}" >submit</button>
 
 </form>
