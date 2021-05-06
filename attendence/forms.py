@@ -14,7 +14,7 @@ class TeacherForm(ModelForm):
         fields = '__all__'
 
 class UserRegistrationForm(UserCreationForm):
-    student = forms.BooleanField()
+    student = forms.BooleanField(required=False)
     class Meta:
         model = User
         fields = ['username', 'password1', 'password2', 'student']

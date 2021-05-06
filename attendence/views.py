@@ -22,11 +22,14 @@ def register(request):
                 username=form.cleaned_data['username'],
                 password=form.cleaned_data['password1']
             )
+            print(form.cleaned_data['username'])
+        print(form.cleaned_data['password1'])
         login(request, new_user)
-        if request.POST['student'] == 'on':
+        try:
+            request.POST['student']
             return redirect('student-form-page')
-        
-        return redirect('teacher-form-page')
+        except:
+            return redirect('teacher-form-page')
     else:
         form = UserRegistrationForm()
 
