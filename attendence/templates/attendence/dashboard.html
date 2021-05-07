@@ -1,13 +1,55 @@
-<h1>Teachers Dashboard</h1>
+{% extends 'attendence/partials/base.html' %}
+{% include 'attendence/partials/navbar.html' %}
 
 
-<h3>{{teacher}}</h3>
+{% block content %}
+
+<!-- This example requires Tailwind CSS v2.0+ -->
+<div class="py-12 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="lg:text-center">
+            <h2 class="text-base text-indigo-600 font-semibold tracking-wide uppercase">{{teacher}}</h2>
+            <p class="mt-2 text-3xl leading-8 font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                Teacher Dashboard
+            </p>
+            <p class="mt-4 max-w-2xl text-xl text-gray-500 lg:mx-auto">
+                Lorem ipsum dolor sit amet consect adipisicing elit. Possimus magnam voluptatum cupiditate veritatis in
+                accusamus quisquam.
+            </p>
+        </div>
+
+        <div class="container px-5 py-24 mx-auto shadow-lg">
+            <div class="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
+                {% for cls in clss %}
+                <div class="p-2 sm:w-1/2 w-full">
 
 
-<a href="{% url 'home-page' %}">Home</a>
-<a href="{% url 'add-class-page' %}">Add Class</a>
-<br><br><hr>
-{% for cls in clss %}
-    <a href="{% url 'attendence-page' brnch=cls.branch sem=cls.sem sec=cls.sec %}">{{cls.sem}} {{cls.sec}} {{cls.branch}} </a> <br>
-    
-{% endfor %}
+                    <div class="bg-gray-100 rounded flex p-4 h-full items-center">
+                        <svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                            stroke-width="3" class="text-indigo-500 w-6 h-6 flex-shrink-0 mr-4" viewBox="0 0 24 24">
+                            <path d="M22 11.08V12a10 10 0 11-5.93-9.14"></path>
+                            <path d="M22 4L12 14.01l-3-3"></path>
+                        </svg>
+                        <a class="title-font font-medium" href="{% url 'attendence-page' brnch=cls.branch sem=cls.sem sec=cls.sec %}">{{cls.sem}} &nbsp;&nbsp; {{cls.sec}}  <b class="uppercase" >&nbsp;&nbsp;{{cls.branch}}</b>  </a> 
+                        </div>
+                       <br>
+
+                </div>
+                {% endfor %}
+                
+            </div>
+            <div class="p-2 w-full">
+                <button class="flex mx-auto text-white bg-indigo-400 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg"><a href="{% url 'add-class-page' %}">Add Class</a></button>
+            
+        </div>
+
+        </dl>
+    </div>
+</div>
+</div>
+
+<br><br>
+<hr>
+
+
+{% endblock content %}

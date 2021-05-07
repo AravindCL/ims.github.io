@@ -15,7 +15,7 @@ class Student(models.Model):
         ('A','A'),('B','B'),('C','C'),('D','D'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    usn = models.CharField(max_length=200, null=True, blank=True)
+    usn = models.CharField(max_length=200, null=True, blank=True, unique=True)
     name = models.CharField(max_length=200, null=True, blank=True)
     branch = models.CharField(max_length = 200, choices=branc, null=True, blank=True)
     sem = models.IntegerField(choices=sem, null=True, blank=True)
@@ -65,4 +65,4 @@ class Count(models.Model):
 
     def __str__(self):
         # return (str(self.cnt))
-        return (self.student.name + " " + str(self.cnt) + " " + self.clss.sec)
+        return str(self.cnt)

@@ -1,19 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register Page</title>
-</head>
+{% extends 'attendence/partials/base.html' %}
+{% load crispy_forms_tags %}
+{% block content %}
 <body>
     testing321
     <form action="" method="post">
         {% csrf_token %}
         <fieldset>
-            {{form.as_p}}
+            {{form|crispy}}
         </fieldset>
         <button type="submit">Submit</button>
     </form>
 </body>
 </html>
-<a href="{% url 'login' %}"><button>Already have an account?</button></a>
+<a href="{% url 'login-page' %}"><button>Already have an account?</button></a>
+
+{% endblock content %}

@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'crispy_forms',
+    'crispy_tailwind',
 ]
 
 MIDDLEWARE = [
@@ -123,3 +125,7 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL = 'home-page'
 LOGOUT_REDIRECT_URL = 'home-page'
 LOGIN_URL = 'login'
+
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+
+CRISPY_TEMPLATE_PACK = "tailwind"

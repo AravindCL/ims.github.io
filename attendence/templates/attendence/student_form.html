@@ -1,9 +1,16 @@
+{% extends 'attendence/partials/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+
 <h1>Student Form</h1>
 
 <form method="POST" >
     {% csrf_token %}
     <fieldset>
-        {{form.as_p}}
+        {{form|crispy}}
     </fieldset>
     <button type="submit" >Submit</button>
 </form>
+
+{% endblock %}
