@@ -122,7 +122,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-LOGIN_REDIRECT_URL = 'home-page'
+LOGIN_REDIRECT_URL = 'check-user-reg'
 LOGOUT_REDIRECT_URL = 'home-page'
 LOGIN_URL = 'login'
 

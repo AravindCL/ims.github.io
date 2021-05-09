@@ -3,14 +3,47 @@
 
 {% block content %}
 
-<h1>Student Form</h1>
 
-<form method="POST" >
-    {% csrf_token %}
-    <fieldset>
-        {{form|crispy}}
-    </fieldset>
-    <button type="submit" >Submit</button>
-</form>
+<section class="text-gray-600 body-font relative">
+    <div class="container px-5 py-24 mx-auto">
+        <div class="flex flex-col text-center w-full mb-12">
+            <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Student Form</h1>
+            <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Whatever cardigan tote bag tumblr hexagon brooklyn
+                asymmetrical gentrify.</p>
+        </div>
+        <div class="lg:w-1/2 md:w-2/3 mx-auto">
+
+
+            <form method="POST">
+                {% csrf_token %}
+                <fieldset>
+                    {{form|crispy}}
+                </fieldset>
+
+
+                <div class="p-2 w-full">
+                    <button type="submit"
+                        class="flex mx-auto text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Submit</button>
+            </form>
+            <p>Are you a teacher ?</p>
+            <a href="{% url 'teacher-form-page' %}"
+                class="bg-transparent hover:bg-yellow-500 text-yellow-700 font-semibold hover:text-white px-1 border border-yellow-500 hover:border-transparent rounded">
+                    click here</a>
+        </div>
+
+    </div>
+</section>
+
+<script>
+
+    document.getElementById('div_id_user').style.display = "none";
+    hdl = document.getElementsByClassName('list-reset')
+    var i = 0;
+    for (i = 0; i <= hdl.length; i++) {
+        hdl[i].style.visibility = 'hidden';
+    }
+</script>
+
+
 
 {% endblock %}

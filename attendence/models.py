@@ -15,15 +15,14 @@ class Student(models.Model):
         ('A','A'),('B','B'),('C','C'),('D','D'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    usn = models.CharField(max_length=200, null=True, blank=True, unique=True)
-    name = models.CharField(max_length=200, null=True, blank=True)
-    branch = models.CharField(max_length = 200, choices=branc, null=True, blank=True)
-    sem = models.IntegerField(choices=sem, null=True, blank=True)
-    sec = models.CharField(max_length = 200, choices=section, null=True, blank=True)
-    is_present = models.BooleanField(default=False, blank=True)
+    usn = models.CharField(max_length=200, null=True, unique=True)
+    name = models.CharField(max_length=200, null=True)
+    branch = models.CharField(max_length = 200, choices=branc, null=True)
+    sem = models.IntegerField(choices=sem, null=True)
+    sec = models.CharField(max_length = 200, choices=section, null=True)
 
     def __str__(self):
-        return (self.usn + " " + self.name)
+        return (str(self.usn) + " " + str(self.name))
 
 
 
@@ -34,7 +33,7 @@ class Teacher(models.Model):
     your_favorite_quote = models.TextField(null=True, blank=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Class(models.Model):
@@ -51,17 +50,18 @@ class Class(models.Model):
         ('A','A'),('B','B'),('C','C'),('D','D'),
     )
     teacher = models.ForeignKey(Teacher, on_delete=models.CASCADE)
-    branch = models.CharField(max_length = 200, choices=branc, null=True, blank=True)
-    sem = models.IntegerField(choices=sem, null=True, blank=True)
-    sec = models.CharField(max_length = 200, choices=section, null=True, blank=True)
+    branch = models.CharField(max_length = 200, choices=branc, null=True, blank=False)
+    sem = models.IntegerField(choices=sem, null=True, blank=False)
+    sec = models.CharField(max_length = 200, choices=section, null=True, blank=False)
+    subject = models.CharField(max_length=200, null=True, blank=True)
 
     def __str__(self):
         return self.teacher.name + " " + str(self.sem) + self.sec
 
 class Count(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=True)
-    clss = models.ForeignKey(Class, on_delete=models.CASCADE, blank=True, null=True)
-    cnt = models.IntegerField(null=True, blank=True)
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, null=True, blank=False)
+    clss = models.ForeignKey(Class, on_delete=models.CASCADE, blank=False, null=True)
+    cnt = models.IntegerField(null=True, blank=False)
 
     def __str__(self):
         # return (str(self.cnt))

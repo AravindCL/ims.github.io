@@ -27,4 +27,3 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
-        exclude = ['is_present']

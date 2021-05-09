@@ -59,7 +59,7 @@
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white divide-y divide-gray-200">
-                                        {% for student, cnt in data %}
+                                        {% for cnt in cnts %}
                                         <tr>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <div class="flex items-center">
@@ -70,7 +70,7 @@
                                                     </div>
                                                     <div class="ml-4">
                                                         <div class="text-sm font-medium text-gray-900">
-                                                            {{student}}
+                                                            {{cnt.student}}
                                                         </div>
 
                                                     </div>
@@ -78,8 +78,8 @@
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 <input type="checkbox" name="present" class="form-radio"
-                                                    value="true {{ student.usn }} {{ student.sem }} {{ student.sec }} {{ student.name }}"
-                                                    id="{{student.usn}}">
+                                                    value="true {{ cnt.student.usn }} {{ cnt.student.sem }} {{ cnt.student.sec }} {{cnt.student.branch}} {{cnt.student.name }}"
+                                                    id="{{cnt.student.usn}}">
 
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
@@ -107,7 +107,7 @@
                         <button type="submit" value="{{student}}" class="focus:outline-none text-blue-600 text-sm py-2.5 px-5 rounded-full border border-blue-600 hover:bg-blue-200">Submit</button>
                     </div>
                     <div class="inline-block mr-2 mt-8 justify-right ">
-                        <button type="submit" value="{{student}}" class="focus:outline-none text-blue-600 text-sm py-2.5 px-5 rounded-full border bg-blue-200 hover:bg-blue-200">Home Page</button>
+                        <button type="submit" value="{{student}}" class="focus:outline-none text-blue-600 text-sm py-2.5 px-5 rounded-full border bg-blue-200 hover:bg-blue-200">Dashboard</button>
                     </div>
 
                 </div>

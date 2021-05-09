@@ -2,16 +2,33 @@
 {% load crispy_forms_tags %}
 {% block content %}
 <body>
-    testing321
-    <form action="" method="post">
-        {% csrf_token %}
-        <fieldset>
-            {{form|crispy}}
-        </fieldset>
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
-<a href="{% url 'login-page' %}"><button>Already have an account?</button></a>
+
+
+
+<br>
+    <div class="bg-grey-lighter min-h-screen flex flex-col">
+        <div class="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
+            <div class="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+                <h1 class="mb-8 text-3xl text-center">Sign up</h1>
+                <form action="" method="post">
+                    {% csrf_token %}
+                    <fieldset>
+                        {{form|crispy}}
+                    </fieldset>
+                    <button
+                    type="submit"
+                    class="w-full text-center py-3 rounded bg-green-400 text-white hover:bg-green-500 focus:outline-none my-1"
+                >Create Account</button>
+                </form>
+            </div>
+
+            <div class="text-grey-dark mt-6">
+                Already have an account? 
+                <a class="no-underline border-b border-blue text-blue" href="{% url 'login-page' %}">
+                    Log in
+                </a>.
+            </div>
+        </div>
+    </div>
 
 {% endblock content %}

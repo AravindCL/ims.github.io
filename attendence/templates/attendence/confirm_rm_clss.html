@@ -1,0 +1,24 @@
+{% extends 'attendence/partials/base.html' %}
+
+{% block content %}
+
+    <form action="" method="post">
+        {% csrf_token %}
+        <section class="text-gray-600 body-font relative">
+            <div class="container px-12 py-24 w-1/2 mx-auto shadow-lg ">
+            <h2 class="text-base  font-semibold  text-4xl py-12 tracking-wide uppercase">Are you sure you want to delete <b class="text-indigo-500" >"{{branch}} {{sem}} {{sec}}"</b></h2>
+    
+            <div class="flex" style="width: 40%;">
+                <button type="submit" class="flex mx-auto bg-transparent hover:bg-red-500 text-red-700 font-semibold hover:text-white py-2 px-4 border border-red-500 hover:border-transparent rounded">
+                    Yes, I am sure
+                  </button>
+                <a href="{% url 'dashboard-page' %}" class="flex mx-auto bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"> No </a>
+    
+            </div>
+
+        </div>
+        </section>
+        
+    </form>
+
+{% endblock content %}

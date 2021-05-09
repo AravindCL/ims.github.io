@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import AddClass, TeacherForm, UserRegistrationForm, StudentForm
 from django.contrib.auth import login, authenticate
+from django.contrib import messages
 
 def home(request):
     print(request.user)
@@ -23,12 +24,12 @@ def register(request):
                 password=form.cleaned_data['password1']
             )
 
-        login(request, new_user)
-        try:
-            request.POST['student']
-            return redirect('student-form-page')
-        except:
-            return redirect('teacher-form-page')
+            login(request, new_user)
+            try:
+                request.POST['student']
+                return redirect('student-form-page')
+            except:
+                return redirect('teacher-form-page')
     else:
         form = UserRegistrationForm()
 
@@ -40,8 +41,11 @@ def register(request):
 
 @login_required
 def dashboard(request):
-    teacher = Teacher.objects.filter(user=request.user)
-    clss = Class.objects.filter(teacher=request.user.teacher)
+    try:
+        teacher = Teacher.objects.filter(user=request.user)
+        clss = Class.objects.filter(teacher=request.user.teacher)
+    except:
+        return redirect('student-dashboard-page')
 
     teacher = request.user.teacher
     context = {
@@ -55,20 +59,30 @@ def add_class(request):
     teacher = request.user.teacher
 
     if request.method == 'POST':
-        tch = request.POST['teacher']
-        print('----', tch, '---')
+        form = AddClass(request.POST, initial={'teacher':teacher})
         branch = request.POST['branch']
         sem = request.POST['sem']
         sec = request.POST['sec']
-        students = Student.objects.filter(sem=sem, branch=branch, sec=sec)
-        form = AddClass(request.POST, initial={'teacher':teacher})
-        
+        if branch == "" or sem == "" or sec == "":
+            messages.warning(request, "Fill all the Fields")
         if form.is_valid():
             form.save()
-            clss = Class.objects.get(teacher=teacher, sem=sem, sec=sec, branch=branch)
+            try:
+                clss = Class.objects.get(teacher=teacher, sem=sem, sec=sec, branch=branch)
+                messages.success(request, 'Class Added Successfully')
+            except:
+                print('class already exits')
+                messages.warning(request, 'Class Already Exists')
+                todelet = Class.objects.filter(teacher=teacher, sem=sem, sec=sec, branch=branch)[1]
+                todelet.delete()
+                return redirect('add-class-page')
+            
+            students = Student.objects.filter(sem=sem, branch=branch, sec=sec)
             for student in students:
                 Count.objects.create(student=student, clss=clss, cnt=1)
             return redirect('dashboard-page')
+        form = AddClass(initial={'teacher':teacher})
+        # return redirect('add-class-page')
     else:
         form = AddClass(initial={'teacher':teacher})
     context = {
@@ -79,10 +93,13 @@ def add_class(request):
 
 @login_required
 def attendence_sheet(request, brnch, sem, sec):
-    teacher = Teacher.objects.get(user=request.user)
-    clss = Class.objects.get(teacher=teacher,branch=brnch, sem=sem, sec=sec)
+    teachers = Teacher.objects.get(user=request.user)
+    clss = Class.objects.get(teacher=teachers,branch=brnch, sem=sem, sec=sec)
     cnts = Count.objects.filter(clss=clss)
     students = Student.objects.filter(branch=brnch, sem=sem, sec=sec)
+    for cnt in cnts:
+        print(cnt.student.usn)
+        
     data = zip(students, cnts)
     for i,j in data:
         print('----')
@@ -90,7 +107,7 @@ def attendence_sheet(request, brnch, sem, sec):
     
     context = {
         'students':students,
-        'teacher':teacher,
+        'teacher':teachers,
         'cnts':cnts,
         'data':zip(students, cnts)
     }
@@ -102,7 +119,7 @@ def teacher_form(request):
         form = TeacherForm(request.POST, initial={'user':request.user.username})
         if form.is_valid():
             form.save()
-        return redirect('dashboard-page')
+            return redirect('dashboard-page')
     else:
         form = TeacherForm(initial={'user':user})
 
@@ -122,8 +139,9 @@ def counts(request):
     for i,j in a.items():
         sem = j[0].split()[2]
         sec = j[0].split()[3]
+        branch = j[0].split()[4]
         teacher = Teacher.objects.get(user=request.user)
-        room = Class.objects.get(teacher=teacher,sem=sem, sec=sec)
+        room = Class.objects.get(teacher=teacher,sem=sem, sec=sec, branch=branch)
         for i in j:
             for student in students:
                 if i.split()[1] == student.usn:
@@ -131,7 +149,7 @@ def counts(request):
                         cnts = Count.objects.get(student=student, clss=room).student
                     except:
                         cnts = None
-                    print(cnts)
+     
                     print(student)
                     if student == cnts:
                         prev = Count.objects.get(student=student, clss=room).cnt
@@ -140,12 +158,11 @@ def counts(request):
                         ct.save()
                         print('student is present')
                     else:
-                        Count.objects.create(student=student, clss=room ,cnt=22)
+                        Count.objects.create(student=student, clss=room ,cnt=1)
 
                         print('Student is absent')
-
+        messages.success(request, "Attendence Taken succesfully")   
         return redirect('dashboard-page')
-    print('------------------------')
     return redirect('dashboard-page')
 
 
@@ -153,15 +170,20 @@ def student_form(request):
     user = request.user
     print(user,"----")
     if request.method == 'POST':
-        form = StudentForm(request.POST, initial={'user':request.user})
+        if request.POST['sem'] == "" or request.POST['sec'] == "" or request.POST['branch'] == "":
+            messages.warning(request, 'All fields are required !!!')
+            return redirect('student-form-page')
         clsses = Class.objects.filter(sem=request.POST['sem'], sec=request.POST['sec'], branch=request.POST['branch'])
+       
+        form = StudentForm(request.POST, initial={'user':request.user})
+            # return redirect('student-form-page')
         if form.is_valid():
             form.save()
             student = Student.objects.get(usn=request.POST['usn'])
             for clss in clsses:
                 Count.objects.create(student=student, clss=clss, cnt=1)
 
-        return redirect('home-page')
+            return redirect('home-page')
     else:
         form = StudentForm(initial={'user':user})
 
@@ -169,3 +191,47 @@ def student_form(request):
         'form':form,
     }
     return render(request, 'attendence/student_form.html', context)
+
+@login_required()
+def rm_clss(request, brnch, sem, sec):
+    teacher = request.user.teacher
+    if request.method == 'POST':
+        clss = Class.objects.get(teacher=teacher, branch=brnch, sem=sem, sec=sec)
+        clss.delete()
+        messages.success(request, 'Deleted Class Successfully ')
+        return redirect('dashboard-page')
+    context = {
+        'branch':brnch,
+        'sem':sem,
+        'sec':sec
+    }
+    return render(request, 'attendence/confirm_rm_clss.html', context)
+
+
+def check_user_registered(request):
+    user = request.user
+    try:
+        Student.objects.get(user=user)
+        print('Found ....')
+        return redirect('student-dashboard-page')
+    except:
+        try:
+            Teacher.objects.get(user=user)
+            return redirect('dashboard-page')
+        except:
+            return redirect('student-form-page')
+
+
+def student_dashboard(request):
+    student = Student.objects.get(user=request.user)
+    print(request.user, student)
+    clss = Class.objects.filter(sem=student.sem, sec=student.sec, branch=student.branch)
+    for j in clss:
+        print(j)
+    cnts = Count.objects.filter(student=student)
+    for i in cnts:
+        print(i.clss)
+    context = {
+        'cnts':cnts,
+    }
+    return render(request, 'attendence/student_dashboard.html', context)
