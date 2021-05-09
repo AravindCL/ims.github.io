@@ -8,8 +8,8 @@ from .models import Teacher
 class AddClass(ModelForm):
     class Meta:
         model = Class 
-        fields = ['teacher', 'sem', 'sec', 'branch']
-        # fields = '__all__'
+        # fields = ['teacher', 'sem', 'sec', 'branch']
+        fields = '__all__'
 
 class TeacherForm(ModelForm):
     class Meta:
