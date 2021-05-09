@@ -1,0 +1,11 @@
+asgiref==3.2.5
+certifi==2019.11.28
+Django==2.2.17
+django-crispy-forms==1.11.2
+gunicorn==20.0.4
+pytz==2019.3
+request==2.23.0
+sqlparse==0.3.1
+urllib3==1.25.8
+whitenoise==5.0.1
+crispy-tailwind==0.5.0
