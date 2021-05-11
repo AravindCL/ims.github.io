@@ -9,12 +9,14 @@
   <header class="border-b md:flex md:items-center md:justify-between p-4 pb-0 shadow-lg md:pb-4">
     
     <!-- Logo text or image -->
+    <a class="flex title-font font-medium items-center text-gray-900 mb-4 md:mb-0">
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-indigo-500 rounded-full" viewBox="0 0 24 24">
+        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+      </svg>
+      <span class="ml-3 text-xl">Hello, {{request.user}}</span>
+    </a>
     <div class="flex items-center justify-between mb-4 md:mb-0">
-      <h1 class="leading-none text-2xl text-grey-darkest">
-        <a class="no-underline text-grey-darkest hover:text-black" href="#">
-          Hello, {{request.user}}
-        </a>
-      </h1>
+    
   
       <a class="text-black hover:text-orange md:hidden" href="#">
         <i class="fa fa-2x fa-bars"></i>

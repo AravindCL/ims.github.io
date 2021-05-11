@@ -1,5 +1,5 @@
 from django.contrib.auth.forms import forms
-from .models import Class, Teacher, Student
+from .models import Class, Teacher, Student, Feedback
 from django.forms import ModelForm, Field
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
@@ -12,9 +12,10 @@ class AddClass(ModelForm):
         fields = '__all__'
 
 class TeacherForm(ModelForm):
+    password = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = Teacher
-        fields = '__all__'
+        fields = ['user', 'name', 'branch', 'your_favorite_quote', 'password']
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -27,3 +28,9 @@ class StudentForm(ModelForm):
     class Meta:
         model = Student
         fields = '__all__'
+
+
+class FeedbackForm(ModelForm):
+    class Meta:
+        model = Feedback
+        fields = ['name', 'message']

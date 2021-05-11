@@ -66,3 +66,11 @@ class Count(models.Model):
     def __str__(self):
         # return (str(self.cnt))
         return str(self.cnt)
+
+class Feedback(models.Model):
+    usr = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
+    name = models.CharField(max_length=200, null=True, blank=True)
+    message = models.TextField()
+
+    def __str__(self):
+        return self.name

@@ -1,14 +1,16 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .models import Student, Teacher, Class, Count
+from .models import Student, Teacher, Class, Count, Feedback
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
-from .forms import AddClass, TeacherForm, UserRegistrationForm, StudentForm
+from .forms import AddClass, TeacherForm, UserRegistrationForm, StudentForm, FeedbackForm
 from django.contrib.auth import login, authenticate
 from django.contrib import messages
 
 def home(request):
     print(request.user)
+    form = FeedbackForm()
+    
     return render(request, 'attendence/home.html')
 
 
@@ -38,6 +40,22 @@ def register(request):
     }
 
     return render(request, 'attendence/register.html', context)
+
+def feedback(request):
+    if request.method == 'POST':
+        user = request.user
+        print(user)
+        name = request.POST['name']
+        message = request.POST['message']
+        if user in User.objects.all():
+            Feedback.objects.create(usr=user, name=name, message=message)
+            messages.success(request, f'Your Response Has been successfully submitted, {request.user}')
+        else:
+            Feedback.objects.create(usr=None, name=name, message=message)
+            messages.success(request, 'Your Response Has been successfully submitted')
+
+
+    return redirect('home-page')
 
 @login_required
 def dashboard(request):
@@ -116,7 +134,11 @@ def attendence_sheet(request, brnch, sem, sec):
 def teacher_form(request):
     user = request.user
     if request.method == 'POST':
-        form = TeacherForm(request.POST, initial={'user':request.user.username})
+        password = request.POST['password']
+        if password == 'sjcitteacher@21':
+            form = TeacherForm(request.POST, initial={'user':request.user.username})
+        else:
+            return redirect('teacher-form-page')
         if form.is_valid():
             form.save()
             return redirect('dashboard-page')
@@ -131,18 +153,20 @@ def teacher_form(request):
 # If you dont wanna go to hell, then better stay away from this function
 def counts(request):
     print("------------------------")
-    students = Student.objects.all()
-
     a = dict(request.GET)
+    students = Student.objects.all()
     print('')
     print(request.GET)
     for i,j in a.items():
         sem = j[0].split()[2]
         sec = j[0].split()[3]
         branch = j[0].split()[4]
+        students = Student.objects.filter(sem=sem, sec=sec, branch=branch)
         teacher = Teacher.objects.get(user=request.user)
         room = Class.objects.get(teacher=teacher,sem=sem, sec=sec, branch=branch)
         for i in j:
+            print('------',i,'-------')
+            print(j)
             for student in students:
                 if i.split()[1] == student.usn:
                     try:
@@ -150,7 +174,6 @@ def counts(request):
                     except:
                         cnts = None
      
-                    print(student)
                     if student == cnts:
                         prev = Count.objects.get(student=student, clss=room).cnt
                         ct = Count.objects.get(student=student, clss=room)
@@ -161,6 +184,8 @@ def counts(request):
                         Count.objects.create(student=student, clss=room ,cnt=1)
 
                         print('Student is absent')
+                    break
+                    
         messages.success(request, "Attendence Taken succesfully")   
         return redirect('dashboard-page')
     return redirect('dashboard-page')

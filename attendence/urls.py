@@ -13,6 +13,7 @@ urlpatterns = [
     path('attendence/<str:brnch>/<int:sem>/<str:sec>/', views.attendence_sheet, name='attendence-page'),
     path('remove/<str:brnch>/<int:sem>/<str:sec>/', views.rm_clss, name='remove-class-page'),
     path('teacher-form/', views.teacher_form, name='teacher-form-page'),
+    path('feedback-form/', views.feedback, name='feedback-page'),
     path('check_user_reg/', views.check_user_registered, name='check-user-reg'),
     path('login/', auth_views.LoginView.as_view(template_name='attendence/login.html') , name='login-page'),
     path('logout/',auth_views.LogoutView.as_view(template_name='attendence/logout.html'),name='logout-page'),
