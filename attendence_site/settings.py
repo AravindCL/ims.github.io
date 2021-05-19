@@ -126,7 +126,7 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = 'check-user-reg'
 LOGOUT_REDIRECT_URL = 'home-page'
-LOGIN_URL = 'login'
+LOGIN_URL = 'login-page'
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
