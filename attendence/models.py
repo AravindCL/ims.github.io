@@ -38,10 +38,13 @@ class Teacher(models.Model):
 
 class Class(models.Model):
     branc = (
-        ('cse','cse'),
-        ('is', 'is'),
-        ('civil', 'civil'),
-        ('mechanical', 'mechanical'),
+        ('CSE','CSE'),
+        ('ISE', 'ISE'),
+        ('Civil', 'Civil'),
+        ('ME', 'ME'),
+        ('Aeronautical', 'Aeronautical'),
+        ('ECE', 'ECE'),
+        ('Aerospace', 'Aerospace'),
     )
     sem = (
         (1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),
