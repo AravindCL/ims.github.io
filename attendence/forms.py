@@ -15,7 +15,7 @@ class TeacherForm(ModelForm):
     password = forms.CharField(widget=forms.PasswordInput())
     class Meta:
         model = Teacher
-        fields = ['user', 'name', 'branch', 'your_favorite_quote', 'password']
+        fields = ['user', 'name', 'department', 'your_favorite_quote', 'password']
 
 
 class UserRegistrationForm(UserCreationForm):

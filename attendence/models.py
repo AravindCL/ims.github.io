@@ -32,7 +32,7 @@ class Student(models.Model):
 class Teacher(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200, null=True, blank=True)
-    branch = models.CharField(max_length=200, null=True, blank=True)
+    department = models.CharField(max_length=200, null=True, blank=True)
     your_favorite_quote = models.TextField(null=True, blank=True)
 
     def __str__(self):
