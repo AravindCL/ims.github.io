@@ -25,9 +25,10 @@ class UserRegistrationForm(UserCreationForm):
         fields = ['username', 'password1', 'password2', 'student']
 
 class StudentForm(ModelForm):
+    usn = forms.CharField(max_length=10, min_length=10,required=True)
     class Meta:
         model = Student
-        fields = '__all__'
+        fields = ['user', 'usn', 'name', 'branch', 'sem', 'sec']
 
 
 class FeedbackForm(ModelForm):

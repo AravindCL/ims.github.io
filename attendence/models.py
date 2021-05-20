@@ -18,7 +18,7 @@ class Student(models.Model):
         ('A','A'),('B','B'),('C','C'),('D','D'),
     )
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    usn = models.CharField(max_length=200, null=True, unique=True)
+    usn = models.CharField(max_length=10, null=True, unique=True)
     name = models.CharField(max_length=200, null=True)
     branch = models.CharField(max_length = 200, choices=branc, null=True)
     sem = models.IntegerField(choices=sem, null=True)
