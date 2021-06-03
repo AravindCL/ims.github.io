@@ -25,7 +25,7 @@ class Student(models.Model):
     sec = models.CharField(max_length = 200, choices=section, null=True)
 
     def __str__(self):
-        return (str(self.usn) + " " + str(self.name))
+        return (str(self.usn) + " " + str(self.name) + " " +str(self.sem))
 
 
 
@@ -80,3 +80,106 @@ class Feedback(models.Model):
 
     def __str__(self):
         return self.name
+
+
+
+class Type(models.Model):
+    name = models.CharField(max_length=200, null=True, blank=True)
+    
+    def __str__(self):
+        return self.name
+
+class Subject(models.Model):
+    branc = (
+        ('CSE','CSE'),
+        ('ISE', 'ISE'),
+        ('Civil', 'Civil'),
+        ('ME', 'ME'),
+        ('Aeronautical', 'Aeronautical'),
+        ('ECE', 'ECE'),
+        ('Aerospace', 'Aerospace'),
+    )
+    sem = (
+        (1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),
+    )
+    sub = models.CharField(max_length=200, null=True, blank=True)
+    sem = models.IntegerField(choices=sem, blank=True, null=True)
+    branch = models.CharField(choices=branc, blank=True, null=True, max_length=200)
+
+    def __str__(self):
+        return f'{self.sub} sem:{self.sem} branch:{self.branch}'
+
+
+class Item(models.Model):
+    sub = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True)
+    tyPe = models.ForeignKey(Type, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200, null=True, blank=True)
+    ques_description = models.CharField(max_length=200, null=True, blank=True)
+    document_ques = models.FileField(upload_to='tutorials/', null=True, blank=True)
+    ans_description = models.CharField(max_length=200, null=True, blank=True)
+    document_ans = models.FileField(upload_to='tutorials/', null=True, blank=True)
+
+
+    def __str__(self):
+        return self.ques_description
+
+
+class Tutorial(models.Model):
+    branc = (
+        ('CSE','CSE'),
+        ('ISE', 'ISE'),
+        ('Civil', 'Civil'),
+        ('ME', 'ME'),
+        ('Aeronautical', 'Aeronautical'),
+        ('ECE', 'ECE'),
+        ('Aerospace', 'Aerospace'),
+    )
+    sem = (
+        (1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),
+    )
+
+    sub = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True)
+    title = models.CharField(max_length=200, null=True, blank=True)
+    ques_description = models.CharField(max_length=200, null=True, blank=True)
+    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+    ans_description = models.CharField(max_length=200, null=True, blank=True)
+    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+class QuestionPaper(models.Model):
+    sub = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200, null=True, blank=True)
+    ques_description = models.CharField(max_length=200, null=True, blank=True)
+    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+    ans_description = models.CharField(max_length=200, null=True, blank=True)
+    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+
+
+    def __str__(self):
+        return self.title
+
+class Note(models.Model):
+    sub = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200, null=True, blank=True)
+    ques_description = models.CharField(max_length=200, null=True, blank=True)
+    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+    ans_description = models.CharField(max_length=200, null=True, blank=True)
+    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+
+
+    def __str__(self):
+        return self.title
+
+    
+
+class ImportantQuestions(models.Model):
+    sub = models.ForeignKey(Subject, on_delete=models.CASCADE)
+    title = models.CharField(max_length=200, null=True, blank=True)
+    ques = models.CharField(max_length=200, null=True, blank=True)
+    ans = models.CharField(max_length=200, null=True, blank=True)
+
+    def __str__(self):
+        return self.title

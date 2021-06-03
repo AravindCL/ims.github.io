@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .models import Student, Teacher, Class, Count, Feedback
+from .models import Student, Teacher, Class, Count, Feedback, Tutorial, Subject, ImportantQuestions, Note, QuestionPaper, Item, Type
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import AddClass, TeacherForm, UserRegistrationForm, StudentForm, FeedbackForm
@@ -8,10 +8,16 @@ from django.contrib.auth import login, authenticate
 from django.contrib import messages
 
 def home(request):
-    print(request.user)
     form = FeedbackForm()
+    student = Student.objects.get(user=request.user)
+    subjects = Subject.objects.filter(sem=student.sem, branch=student.branch)
+    types = Type.objects.all()
+    context = {
+        'types':types,
+        'subjects':subjects,
+    }
     
-    return render(request, 'attendence/home.html')
+    return render(request, 'attendence/home.html', context)
 
 
 def register(request):
@@ -118,16 +124,16 @@ def attendence_sheet(request, brnch, sem, sec):
     for cnt in cnts:
         print(cnt.student.usn)
         
-    data = zip(students, cnts)
-    for i,j in data:
-        print('----')
-        print(i,j)
+    # data = zip(students, cnts)
+    # for i,j in data:
+    #     print('----')
+    #     print(i,j)
     
     context = {
         'students':students,
         'teacher':teachers,
         'cnts':cnts,
-        'data':zip(students, cnts)
+        # 'data':zip(students, cnts)
     }
     return render(request, 'attendence/attendence_sheet.html', context)
 
@@ -260,3 +266,15 @@ def student_dashboard(request):
         'cnts':cnts,
     }
     return render(request, 'attendence/student_dashboard.html', context)
+
+
+def idonno(request, type_):
+    student = Student.objects.get(user=request.user)
+    subjects = Subject.objects.filter(sem=student.sem, branch=student.branch)
+    items = Item.objects.filter(tyPe__name=type_)
+    context = {
+        'items':items,
+        'subjects':subjects,
+        'type':type_,
+    }
+    return render(request, 'attendence/idonno.html', context)

@@ -1,6 +1,8 @@
 from django.urls import path
 from . import views
 from django.contrib.auth import views as auth_views
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('', views.home, name='home-page'),
@@ -17,4 +19,9 @@ urlpatterns = [
     path('check_user_reg/', views.check_user_registered, name='check-user-reg'),
     path('login/', auth_views.LoginView.as_view(template_name='attendence/login.html') , name='login-page'),
     path('logout/',auth_views.LogoutView.as_view(template_name='attendence/logout.html'),name='logout-page'),
+    path('idonno/<str:type_>/', views.idonno, name='idonno-page'),
 ]
+
+
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

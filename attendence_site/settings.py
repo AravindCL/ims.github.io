@@ -124,6 +124,9 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 STATIC_URL = '/static/'
 
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
 LOGIN_REDIRECT_URL = 'check-user-reg'
 LOGOUT_REDIRECT_URL = 'home-page'
 LOGIN_URL = 'login-page'
