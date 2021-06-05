@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
-from .models import Student, Teacher, Class, Count, Feedback, Tutorial, Subject, ImportantQuestions, Note, QuestionPaper, Item, Type
+from .models import Student, Teacher, Class, Count, Feedback, Item, Type, Subject
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from .forms import AddClass, TeacherForm, UserRegistrationForm, StudentForm, FeedbackForm
@@ -9,12 +9,18 @@ from django.contrib import messages
 
 def home(request):
     form = FeedbackForm()
-    student = Student.objects.get(user=request.user)
-    subjects = Subject.objects.filter(sem=student.sem, branch=student.branch)
+    try:
+        student = Student.objects.get(user=request.user)
+        print(student.user)
+        subjects = Subject.objects.filter(sem=student.sem, branch=student.branch)
+    except:
+        subjects = {}
+        student = {}
     types = Type.objects.all()
     context = {
         'types':types,
         'subjects':subjects,
+        'student':student,
     }
     
     return render(request, 'attendence/home.html', context)

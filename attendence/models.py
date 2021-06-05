@@ -84,6 +84,7 @@ class Feedback(models.Model):
 
 
 class Type(models.Model):
+    image_url = models.CharField(max_length=800, null=True, blank=True)
     name = models.CharField(max_length=200, null=True, blank=True)
     
     def __str__(self):
@@ -102,6 +103,7 @@ class Subject(models.Model):
     sem = (
         (1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),
     )
+
     sub = models.CharField(max_length=200, null=True, blank=True)
     sem = models.IntegerField(choices=sem, blank=True, null=True)
     branch = models.CharField(choices=branc, blank=True, null=True, max_length=200)
@@ -124,62 +126,62 @@ class Item(models.Model):
         return self.ques_description
 
 
-class Tutorial(models.Model):
-    branc = (
-        ('CSE','CSE'),
-        ('ISE', 'ISE'),
-        ('Civil', 'Civil'),
-        ('ME', 'ME'),
-        ('Aeronautical', 'Aeronautical'),
-        ('ECE', 'ECE'),
-        ('Aerospace', 'Aerospace'),
-    )
-    sem = (
-        (1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),
-    )
+# class Tutorial(models.Model):
+#     branc = (
+#         ('CSE','CSE'),
+#         ('ISE', 'ISE'),
+#         ('Civil', 'Civil'),
+#         ('ME', 'ME'),
+#         ('Aeronautical', 'Aeronautical'),
+#         ('ECE', 'ECE'),
+#         ('Aerospace', 'Aerospace'),
+#     )
+#     sem = (
+#         (1,1),(2,2),(3,3),(4,4),(5,5),(6,6),(7,7),(8,8),
+#     )
 
-    sub = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True)
-    title = models.CharField(max_length=200, null=True, blank=True)
-    ques_description = models.CharField(max_length=200, null=True, blank=True)
-    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
-    ans_description = models.CharField(max_length=200, null=True, blank=True)
-    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+#     sub = models.ForeignKey(Subject, on_delete=models.CASCADE, null=True)
+#     title = models.CharField(max_length=200, null=True, blank=True)
+#     ques_description = models.CharField(max_length=200, null=True, blank=True)
+#     document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+#     ans_description = models.CharField(max_length=200, null=True, blank=True)
+#     document = models.FileField(upload_to='tutorials/', null=True, blank=True)
 
-    def __str__(self):
-        return self.title
-
-
-class QuestionPaper(models.Model):
-    sub = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200, null=True, blank=True)
-    ques_description = models.CharField(max_length=200, null=True, blank=True)
-    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
-    ans_description = models.CharField(max_length=200, null=True, blank=True)
-    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+#     def __str__(self):
+#         return self.title
 
 
-    def __str__(self):
-        return self.title
-
-class Note(models.Model):
-    sub = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200, null=True, blank=True)
-    ques_description = models.CharField(max_length=200, null=True, blank=True)
-    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
-    ans_description = models.CharField(max_length=200, null=True, blank=True)
-    document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+# class QuestionPaper(models.Model):
+#     sub = models.ForeignKey(Subject, on_delete=models.CASCADE)
+#     title = models.CharField(max_length=200, null=True, blank=True)
+#     ques_description = models.CharField(max_length=200, null=True, blank=True)
+#     document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+#     ans_description = models.CharField(max_length=200, null=True, blank=True)
+#     document = models.FileField(upload_to='tutorials/', null=True, blank=True)
 
 
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title
+
+# class Note(models.Model):
+#     sub = models.ForeignKey(Subject, on_delete=models.CASCADE)
+#     title = models.CharField(max_length=200, null=True, blank=True)
+#     ques_description = models.CharField(max_length=200, null=True, blank=True)
+#     document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+#     ans_description = models.CharField(max_length=200, null=True, blank=True)
+#     document = models.FileField(upload_to='tutorials/', null=True, blank=True)
+
+
+#     def __str__(self):
+#         return self.title
 
     
 
-class ImportantQuestions(models.Model):
-    sub = models.ForeignKey(Subject, on_delete=models.CASCADE)
-    title = models.CharField(max_length=200, null=True, blank=True)
-    ques = models.CharField(max_length=200, null=True, blank=True)
-    ans = models.CharField(max_length=200, null=True, blank=True)
+# class ImportantQuestions(models.Model):
+#     sub = models.ForeignKey(Subject, on_delete=models.CASCADE)
+#     title = models.CharField(max_length=200, null=True, blank=True)
+#     ques = models.CharField(max_length=200, null=True, blank=True)
+#     ans = models.CharField(max_length=200, null=True, blank=True)
 
-    def __str__(self):
-        return self.title
+#     def __str__(self):
+#         return self.title

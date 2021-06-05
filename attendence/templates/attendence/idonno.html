@@ -43,7 +43,7 @@
                             <path d="M22 4L12 14.01l-3-3"></path>
                         </svg>
                         {% if i.ans_description == None %}
-                            <span class="title-font font-medium">No answers yet</span>
+                            <span class="title-font font-medium">Not available now ....</span>
                         {% else %}
                             <a href="{{ i.document_ans.url }} " target=”_blank”><span class="title-font font-medium">{{i.ans_description}} </span></a>
                                
@@ -55,7 +55,7 @@
                 {% endif %}
             {% endfor %}
         </div>
-        
+
     </div>
     {% endfor %}
   </section>

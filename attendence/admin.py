@@ -1,5 +1,5 @@
 from django.contrib import admin
-from . models import Student, Teacher, Class, Count, Feedback, Tutorial, Subject, ImportantQuestions, Note, QuestionPaper, Item, Type
+from . models import Student, Teacher, Class, Count, Feedback, Subject, Item, Type
 
 
 admin.site.register(Student)
