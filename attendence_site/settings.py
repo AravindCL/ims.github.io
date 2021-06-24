@@ -25,7 +25,8 @@ SECRET_KEY = 'ct=)4u=%$4ieh1^y3feoffyo)3+zlg@+l=kw)c-h^@#t521@ak'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "attendence-sheet.herokuapp.com"]
+# ALLOWED_HOSTS = ["127.0.0.1", "attendence-sheet.herokuapp.com","localhost"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -52,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
 
 ROOT_URLCONF = 'attendence_site.urls'
@@ -67,6 +69,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                'social_django.context_processors.backends',  # <-- Here
+                'social_django.context_processors.login_redirect', # <-- Here
             ],
         },
     },
@@ -104,7 +109,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.facebook.FacebookOAuth2',
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.github.GithubOAuth2',
 
+    'django.contrib.auth.backends.ModelBackend',
+)
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -135,13 +146,6 @@ LOGIN_URL = 'login-page'
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
 CRISPY_TEMPLATE_PACK = "tailwind"
-
-
-SOCIAL_AUTH_URL_NAMESPACE = 'social'
-SOCIAL_AUTH_URL_NAMESPACE = "social"
-
-
-AUTHENTICATION_BACKEND = ['social_core.backends.facebook.FacebookOAuth2']
 
 SOCIAL_AUTH_FACEBOOK_KEY = '493964015243201'
 SOCIAL_AUTH_FACEBOOK_SECRET = '7c1b4db784af84123b310b6848193285'
