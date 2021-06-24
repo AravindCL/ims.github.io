@@ -25,8 +25,8 @@ SECRET_KEY = 'ct=)4u=%$4ieh1^y3feoffyo)3+zlg@+l=kw)c-h^@#t521@ak'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-# ALLOWED_HOSTS = ["127.0.0.1", "attendence-sheet.herokuapp.com","localhost"]
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["127.0.0.1", "attendence-sheet.herokuapp.com","localhost"]
+# ALLOWED_HOSTS = []
 
 
 # Application definition
