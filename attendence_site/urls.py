@@ -20,4 +20,5 @@ from attendence import urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('attendence.urls')),
+    path('', include('social_django.urls', namespace='social'))
 ]
