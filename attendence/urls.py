@@ -20,6 +20,7 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='attendence/login.html') , name='login-page'),
     path('logout/',auth_views.LogoutView.as_view(template_name='attendence/logout.html'),name='logout-page'),
     path('idonno/<str:type_>/', views.idonno, name='idonno-page'),
+    path('google645cd8e508c990d1.html/', views.google_verification, name='google')
 
 ]
 

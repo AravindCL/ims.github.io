@@ -284,3 +284,7 @@ def idonno(request, type_):
         'type':type_,
     }
     return render(request, 'attendence/idonno.html', context)
+
+def google_verification(request):
+
+    return render(request, 'attendence/google645cd8e508c990d1.html')
