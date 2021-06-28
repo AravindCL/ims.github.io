@@ -1,4 +1,5 @@
 {% extends 'attendence/partials/base.html' %}
+{% load socialaccount %}
 
 {% load crispy_forms_tags %}
 {% block content %}
@@ -107,8 +108,9 @@
   Login with Facebook
 </button></a>
 
-<a href=""><button class="loginBtn loginBtn--google">
-  Login with Google(currently not working)
+
+<a href="{% provider_login_url 'google' %}"><button class="loginBtn loginBtn--google">
+  Login with Google
 </button></a>
 
 

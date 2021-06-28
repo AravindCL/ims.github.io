@@ -25,13 +25,17 @@ SECRET_KEY = 'ct=)4u=%$4ieh1^y3feoffyo)3+zlg@+l=kw)c-h^@#t521@ak'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["127.0.0.1", "attendence-sheet.herokuapp.com","localhost"]
-# ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ["127.0.0.1", "attendence-sheet.herokuapp.com","localhost"]
+ALLOWED_HOSTS = []
 
 
 # Application definition
 
 INSTALLED_APPS = [
+
+    'django.contrib.sites',
+
+
     'django.contrib.admin',
     'django.contrib.auth',
     'attendence.apps.AttendenceConfig',
@@ -42,6 +46,12 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_tailwind',
     'social_django',
+
+
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 MIDDLEWARE = [
@@ -115,7 +125,32 @@ AUTHENTICATION_BACKENDS = (
     'social_core.backends.github.GithubOAuth2',
 
     'django.contrib.auth.backends.ModelBackend',
+
+    'allauth.account.auth_backends.AuthenticationBackend'
+
 )
+
+
+
+
+
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        }
+    }
+}
+
+
+SITE_ID = 3
+
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
