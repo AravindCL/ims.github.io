@@ -1,0 +1,157 @@
+
+{% extends 'attendence/partials/base.html' %}
+{% include 'attendence/partials/navbar.html' %}
+
+
+{% block content %}
+
+
+<div class="container-sm">
+
+
+    <section class="text-gray-600 body-font">
+        <div class="container px-5 py-24 mx-auto">
+          <div class="flex flex-wrap w-full mb-20 ">
+            <div class="lg:w-1/2 w-full mb-6 lg:mb-0 ">
+              <h1 class="sm:text-3xl text-2xl font-medium title-font mb-2 text-gray-900">Attendence Sheet</h1>
+              
+              <div class="h-1 w-20 bg-indigo-500 rounded"></div>
+              <p id="date"></p>
+            </div>
+            
+          </div>
+            
+          <script>
+            n =  new Date();
+            y = n.getFullYear();
+            m = n.getMonth() + 1;
+            d = n.getDate();
+            document.getElementById("date").innerHTML = String(n).slice(0,10);
+        </script>
+
+                <div class="relative" form="marksForm">
+                    <select class="...">
+                        <option>Indiana</option>
+                        <option>Michigan</option>
+                        <option>Ohio</option>
+                    </select>
+                    
+                </div>
+            <form action="{% url 'marks-page' clss.sem clss.sec clss.branch clss.subject %}" method="GET" id="marksForm">
+                
+                <div class="flex flex-col">
+                    <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8 ">
+                        <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
+                            <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
+                                <table class="min-w-full divide-y divide-gray-200">
+                                    <thead class="bg-gray-50">
+                                        <tr>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                student
+                                            </th>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                IA-1
+
+                                            </th>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                IA-2
+                                            </th>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                IA-3
+                                            </th>
+                                            <th scope="col"
+                                                class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                                Total
+                                            </th>
+
+                                        </tr>
+                                    </thead>
+                                    <tbody class="bg-white divide-y divide-gray-200">
+                                        {% for mrk in mrks %}
+                                        <tr>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <div class="flex items-center">
+                                                    <div class="flex-shrink-0 h-10 w-10">
+                                                        <img class="h-10 w-10 rounded-full"
+                                                            src="https://images.unsplash.com/photo-1558021211-6d1403321394?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTd8fHN0dWRlbnR8ZW58MHx8MHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+                                                            alt="">
+                                                    </div>
+                                                    <div class="ml-4">
+                                                        <div class="text-sm font-medium text-gray-900">
+                                                            {{mrk.student}}
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+                                                <input type="hidden" name="student" value="{{mrk.student.usn}}">
+                                          
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold 800">
+                                                        <input type="number" name="student" value="{{mrk.marks1}}">
+                                                        {% comment %} {{mrk.marks1}} {% endcomment %}
+                                                </span>
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold 800">
+                                                        <input type="number" name="student" value="{{mrk.marks2}}">
+                                                        {% comment %} {{mrk.marks1}} {% endcomment %}
+                                                </span>
+                                                
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold 800">
+                                                        <input type="number" name="student" value="{{mrk.marks3}}">
+                                                        {% comment %} {{mrk.marks1}} {% endcomment %}
+                                                </span>
+                                                
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                                    <span
+                                                    class="px-2 inline-flex text-xs leading-5 font-semibold 800">
+                                                    <span>
+                                                         {{mrk.marks1}} + {{mrk.marks2}} + {{mrk.marks3}}
+                                                    </span>
+                                                    
+                                                        {% comment %} {{mrk.marks1}} {% endcomment %}
+                                                </span>
+                                                
+                                            </td>
+
+                                        </tr>
+                                        {% endfor %}
+
+                                        <!-- More people... -->
+                                    </tbody>
+                                </table>
+                            </div>
+                    </div>
+                </div>
+                <div class="flex">
+
+                    <div class="inline-block mr-2 mt-8 justify-center ">
+                        <button type="submit" value="{{student}}" class="focus:outline-none text-blue-600 text-sm py-2.5 px-5 rounded-full border border-blue-600 hover:bg-blue-200">Submit</button>
+                    </div>
+                    <div class="inline-block mr-2 mt-8 justify-right ">
+                        <a href="{% url 'dashboard-page' %}"><button class="focus:outline-none text-blue-600 text-sm py-2.5 px-5 rounded-full border bg-blue-200 hover:bg-blue-200">Dashboard</button></a>
+                    </div>
+
+                </div>
+               
+
+
+            </form>
+           
+        </div>
+    </div>
+   
+      </section>
+</div>
+{% endblock content %}

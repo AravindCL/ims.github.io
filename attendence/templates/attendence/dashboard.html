@@ -15,39 +15,55 @@
             </p>
         </div>
 
-        <div class="container px-5 py-24 mx-auto shadow-lg">
-            <div class="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
-                {% for cls in clss %}
-                <div class="p-2 sm:w-1/2 w-full">
 
 
-                    <div class="bg-gray-100 rounded flex p-4 h-full items-center">
+
+
+<div class="container px-5 py-24 mx-auto shadow-lg">
+<div class="flex flex-wrap lg:w-4/5 sm:mx-auto sm:mb-2 -mx-2">
+
+
+    <!--Card 1-->
+    
+    {% for cls in clss %}
+
+    <div class="rounded overflow-hidden shadow-lgp-2 sm:w-1/2 w-full">
+      <div class="px-6 py-4" >
+        <div class="rounded flex p-4 h-full items-center">
                      
-                        <div style="width: 100%;">
-                            <a class="title-font font-medium" href="{% url 'attendence-page' brnch=cls.branch sem=cls.sem sec=cls.sec %}">{{cls.sem}} &nbsp;&nbsp; {{cls.sec}}  <b class="uppercase" >&nbsp;&nbsp;{{cls.branch}}</b> </a>
-                        </div>
-                        <a href="{% url 'remove-class-page' brnch=cls.branch sem=cls.sem sec=cls.sec %}" ><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                          </svg> 
-                        </a>
-                    </div>
-                       <br>
-
-                </div>
-                {% endfor %}
-                
+            <div style="width: 100%;">{{cls.sem}} &nbsp;&nbsp; {{cls.sec}}  <b class="uppercase" >&nbsp;&nbsp;{{cls.branch}}</b>
+                            
             </div>
-            <div class="p-2 w-full">
+            <a href="{% url 'remove-class-page' brnch=cls.branch sem=cls.sem sec=cls.sec %}" ><svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg> 
+            </a>
+            </div>
+        
+      </div>
+      <div class="px-6 pt-4 pb-2">
+        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"><a href="{% url 'attendence-page' brnch=cls.branch sem=cls.sem sec=cls.sec %}">Attendence</a></span>
+        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2"><a href="{% url 'marks-student-page' brnch=cls.branch sem=cls.sem sec=cls.sec %}">Marks </a></span>
+        <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2 mb-2">#winter</span>
+      </div>
+    </div>
+    {% endfor %}
+  
+</div>
+</div>
+
+
+
+
+
+
+<div class="p-2 w-full">
                 
                   <button type="submit"
                   class="flex mx-auto bg-transparent hover:bg-indigo-500 text-indigo-700 font-semibold hover:text-white py-2 px-4 border border-indigo-500 hover:border-transparent rounded">
                   <a href="{% url 'add-class-page' %}">Add Class</a>
               </button>
             
-        </div>
-
-        </dl>
-    </div>
+            </div>
 </div>
 </div>
 
