@@ -31,6 +31,44 @@
     </div>
   </div>
 
+
+
+
+
+<div class="w-2/3 mx-auto py-24">
+    <div class="bg-white shadow-md rounded my-6">
+      <table class="text-left w-full border-collapse"> <!--Border collapse doesn't work on this site yet but it's available in newer tailwind versions -->
+        <thead>
+          <tr>
+            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">Teacher</th>
+            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">IA-1</th>
+            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">IA-2</th>
+            <th class="py-4 px-6 bg-grey-lightest font-bold uppercase text-sm text-grey-dark border-b border-grey-light">IA-3</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for mrk in marks %}
+
+          <tr class="hover:bg-grey-lighter">
+          <td class="py-4 px-6 border-b border-grey-light"><p class="" ><b class="text-xl" >{{cnt.clss.subject}}</b> </p> {{mrk.clss.subject}}"  </td>
+          <td class="py-4 px-6 border-b border-grey-light">
+            <a href="#" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">{{mrk.marks1}}</a>
+          </td>
+          <td class="py-4 px-6 border-b border-grey-light">
+            <a href="#" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">{{mrk.marks2}}</a>
+          </td>
+          <td class="py-4 px-6 border-b border-grey-light">
+            <a href="#" class="text-grey-lighter font-bold py-1 px-3 rounded text-xs bg-blue hover:bg-blue-dark">{{mrk.marks3}}</a>
+          </td>
+          </tr>
+          {% endfor %}
+
+         
+         
+        </tbody>
+      </table>
+    </div>
+  </div>
   
 
 {% endblock content %}

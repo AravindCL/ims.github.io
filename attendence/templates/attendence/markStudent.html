@@ -29,14 +29,6 @@
             document.getElementById("date").innerHTML = String(n).slice(0,10);
         </script>
 
-                <div class="relative" form="marksForm">
-                    <select class="...">
-                        <option>Indiana</option>
-                        <option>Michigan</option>
-                        <option>Ohio</option>
-                    </select>
-                    
-                </div>
             <form action="{% url 'marks-page' clss.sem clss.sec clss.branch clss.subject %}" method="GET" id="marksForm">
                 
                 <div class="flex flex-col">

@@ -338,13 +338,11 @@ def student_dashboard(request):
     print(request.user, student)
     clss = Class.objects.filter(
         sem=student.sem, sec=student.sec, branch=student.branch)
-    for j in clss:
-        print(j)
     cnts = Count.objects.filter(student=student)
-    for i in cnts:
-        print(i.clss)
+    marks = StudentMark.objects.filter(student=student)
     context = {
         'cnts': cnts,
+        'marks':marks,
     }
     return render(request, 'attendence/student_dashboard.html', context)
 
